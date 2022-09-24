@@ -20,9 +20,11 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.petclinic.vet.VetRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,8 +50,24 @@ class OwnerController {
 
 	private final OwnerRepository owners;
 
-	public OwnerController(OwnerRepository clinicService) {
+	private VetRepository vetRepository2;
+
+	// 필드 주입
+	@Autowired
+	private VetRepository vetRepository3;
+
+	// 생성자 주입
+	private final VetRepository vetRepository;
+
+	// Setter 주입
+	@Autowired
+	public void setVetRepository2(VetRepository vetRepository2) {
+		this.vetRepository2 = vetRepository2;
+	}
+
+	public OwnerController(OwnerRepository clinicService, VetRepository vetRepository) {
 		this.owners = clinicService;
+		this.vetRepository = vetRepository;
 	}
 
 	@InitBinder
